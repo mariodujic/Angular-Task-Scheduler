@@ -1,0 +1,44 @@
+<mat-toolbar
+  color="primary">
+  <mat-toolbar-row>
+    <span>Task Scheduler</span>
+    <span class="spacer"></span>
+
+    <div
+      *ngFor="let project of taskService.getProjects()"
+      class="toolbar-icon-wrapper">
+      <div
+        *ngFor="let task of project.tasks">
+        <div
+          *ngIf="(task.date | taskPriorityIcon | async) == 'status-urgent'">
+
+          <button
+            mat-icon-button>
+            <mat-icon
+              class="status-urgent hand-cursor"
+            >notification_important
+            </mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <button
+      mat-icon-button
+      aria-label="Example icon-button with a heart icon"
+      (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-drawer-container
+  class="drawer-container"
+  autosize>
+  <mat-drawer #drawer mode="side">
+    <app-task-categories></app-task-categories>
+  </mat-drawer>
+  <app-task-content></app-task-content>
+</mat-drawer-container>

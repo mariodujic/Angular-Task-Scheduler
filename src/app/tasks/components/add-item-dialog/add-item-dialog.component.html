@@ -1,0 +1,24 @@
+<div fxLayout="column" fxLayoutAlign="space-around center">
+  <p mat-dialog-title>{{dialogModel.dialogTitle}}</p>
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      [(ngModel)]="itemModel.title"
+      placeholder="Item title?">
+  </mat-form-field>
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="full-width">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="onDismiss(false)"
+    >Cancel
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onDismiss(true)"
+    >Submit
+    </button>
+  </div>
+</div>
+
