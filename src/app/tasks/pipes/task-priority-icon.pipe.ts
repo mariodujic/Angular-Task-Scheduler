@@ -1,6 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {TaskPriority} from '../utils/TaskPriority';
-import {TaskStatus} from '../utils/TaskStatus';
+import {TaskPriority} from '../utils/handlers/TaskPriority';
+import {TaskStatus} from '../utils/handlers/TaskStatus';
 import {Observable, timer} from 'rxjs';
 import {map} from 'rxjs/operators';
 

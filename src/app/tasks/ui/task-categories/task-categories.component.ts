@@ -3,10 +3,10 @@ import {TaskService} from '../../services/task.service';
 import {Project} from '../../data/task.model';
 import {slideInOutLeft} from '../../animations/slides';
 import {UserInterfaceService} from '../../services/user-interface.service';
-import {AddItemDialogModel} from '../../components/add-item-dialog/add-item-dialog.model';
 import {take} from 'rxjs/operators';
 import {AddRemoveItem} from '../../core/AddRemoveItem';
-import {ItemType} from '../../core/ItemType';
+import {ItemBase} from '../../core/base/ItemBase';
+import {ItemType} from '../../core/base/ItemType';
 
 @Component({
   selector: 'app-task-categories',
@@ -14,25 +14,24 @@ import {ItemType} from '../../core/ItemType';
   templateUrl: './task-categories.component.html',
   styleUrls: ['./task-categories.component.sass']
 })
-export class TaskCategoriesComponent implements AddRemoveItem {
+export class TaskCategoriesComponent extends ItemBase<Project> implements AddRemoveItem {
 
   constructor(
     public taskService: TaskService,
-    private uiService: UserInterfaceService<Project>
+    public uiService: UserInterfaceService<Project>
   ) {
+    super(uiService);
 
     taskService.getCurrentProjectSubject().next(this.taskService.getProjects()[0]);
   }
 
-  onProjectSelect(pursuit: Project) {
-    this.taskService.getCurrentProjectSubject().next(pursuit);
+  onProjectSelect(project: Project) {
+    console.log(project);
+    this.taskService.getCurrentProjectSubject().next(project);
   }
 
   onAddItem(): void {
-    this.uiService.openDialog(
-      new AddItemDialogModel('Add Project', false),
-      ItemType.Project)
-      .afterClosed()
+    this.dialogResponse('Add Project', ItemType.Project)
       .pipe(take(1))
       .subscribe(
         response => {

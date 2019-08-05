@@ -1,5 +1,5 @@
 import {TaskStatus} from './TaskStatus';
-import {TimeStamp} from './TimeStamp';
+import {TimeStamp} from '../TimeStamp';
 
 // TODO Give user possibility to change these dynamically in settings
 const STATUS_LOW_SECONDS = 5;

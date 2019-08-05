@@ -4,5 +4,7 @@ export const environment = {
   taskStatusNormal: 1,
   taskStatusLow: 0,
   noTaskDescription: 'No description',
-  taskSuccessfullyAdded: 'Task successfully added'
+  taskSuccessfullyAdded: 'Task added successfully',
+  taskSuccessfullyRemoved: 'Task removed successfully',
+  noDialogInput: 'Field can not be empty'
 };
