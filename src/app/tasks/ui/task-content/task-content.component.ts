@@ -6,6 +6,7 @@ import {AddRemoveItem} from '../../core/AddRemoveItem';
 import {UserInterfaceService} from '../../services/user-interface.service';
 import {AddItemDialogModel} from '../../components/add-item-dialog/add-item-dialog.model';
 import {ItemType} from '../../core/ItemType';
+import {combineLatest, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-task-content',
@@ -32,26 +33,20 @@ export class TaskContentComponent implements AddRemoveItem {
     this.currentTaskIndex--;
   }
 
-  // TODO improve this into possibly mergin to observables
+  // first observable holds task and dialog data, second dialog holds project data
   onAddItem(): void {
-    this.uiService.openDialog(
-      new AddItemDialogModel('Add Project', false),
-      ItemType.Task)
-      .afterClosed()
-      .pipe(take(1))
-      .subscribe(
-        response => {
-          this.taskService.getCurrentProjectSubject()
-            .pipe(take(1))
-            .subscribe(
-              project => {
-                if (response.dialog.isDialogSubmitted) {
-                  this.taskService.addItem(project, response.item);
-                }
-              }
-            );
+    combineLatest(this.dialogResponse(), this.taskService.getCurrentProjectSubject())
+      .subscribe(value => {
+        if (value[0].dialog.isDialogSubmitted) {
+          this.taskService.addItem(value[1], value[0].item);
         }
-      );
+      });
+  }
+
+  private dialogResponse(): Observable<any> {
+    return this.uiService.openDialog(
+      new AddItemDialogModel('Add Project', false),
+      ItemType.Task).afterClosed();
   }
 
   onRemoveItem(itemId: string): void {
