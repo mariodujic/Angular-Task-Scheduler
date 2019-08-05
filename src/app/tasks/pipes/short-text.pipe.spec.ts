@@ -20,10 +20,10 @@ describe('ShortTextPipe', () => {
   });
 
   it('providing null should return constant', () => {
-    expect(shortText.transform(null, 3)).toBe(environment.no_task_description);
+    expect(shortText.transform(null, 3)).toBe(environment.noTaskDescription);
   });
 
   it('providing empty string should return constant', () => {
-    expect(shortText.transform('', 3)).toBe(environment.no_task_description);
+    expect(shortText.transform('', 3)).toBe(environment.noTaskDescription);
   });
 });

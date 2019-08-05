@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import {AddItemDialogComponent} from '../components/add-item-dialog/add-item-dialog.component';
 import {AddItemDialogModel} from '../components/add-item-dialog/add-item-dialog.model';
-import {ItemType} from '../core/ItemType';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserInterfaceService<T> {
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog,
+              private snackbar: MatSnackBar) {
   }
 
   public openDialog(dialogModel: AddItemDialogModel, itemType: string): MatDialogRef<AddItemDialogComponent> {
@@ -18,6 +18,14 @@ export class UserInterfaceService<T> {
         dialog: dialogModel,
         type: itemType
       }
+    });
+  }
+
+  // SnackbarType enum used for type, SnackbarTime used for messageDuration
+  showSnackbar(type: string, message: string, messageDuration: number): void {
+    this.snackbar.open(message, '', {
+      panelClass: type,
+      duration: messageDuration
     });
   }
 }

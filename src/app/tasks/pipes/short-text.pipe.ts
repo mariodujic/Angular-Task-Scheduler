@@ -9,9 +9,9 @@ export class ShortTextPipe implements PipeTransform {
 
   transform(text: string, textSize: number): any {
     if (text == null) {
-      return environment.no_task_description;
+      return environment.noTaskDescription;
     } else {
-      return text.length > 0 ? text.substring(0, textSize) : environment.no_task_description;
+      return text.length > 0 ? text.substring(0, textSize) : environment.noTaskDescription;
     }
   }
 }

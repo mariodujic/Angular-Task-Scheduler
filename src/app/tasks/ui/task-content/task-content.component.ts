@@ -7,6 +7,9 @@ import {UserInterfaceService} from '../../services/user-interface.service';
 import {AddItemDialogModel} from '../../components/add-item-dialog/add-item-dialog.model';
 import {ItemType} from '../../core/ItemType';
 import {combineLatest, Observable} from 'rxjs';
+import {SnackbarType} from '../../utils/SnackbarType';
+import {SnackbarTime} from '../../utils/SnackbarTime';
+import {environment} from '../../../../environments/environment.prod';
 
 @Component({
   selector: 'app-task-content',
@@ -39,6 +42,7 @@ export class TaskContentComponent implements AddRemoveItem {
       .subscribe(value => {
         if (value[0].dialog.isDialogSubmitted) {
           this.taskService.addItem(value[1], value[0].item);
+          this.uiService.showSnackbar(SnackbarType.SUCCESS, environment.taskSuccessfullyAdded, SnackbarTime.LONG);
         }
       });
   }

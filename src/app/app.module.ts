@@ -8,7 +8,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {
   MatButtonModule,
   MatCardModule,
-  MatDatepickerModule, MatDialogModule,
+  MatDatepickerModule,
+  MatDialogModule,
   MatDividerModule,
   MatExpansionModule,
   MatFormFieldModule,
@@ -16,6 +17,7 @@ import {
   MatInputModule,
   MatNativeDateModule,
   MatSidenavModule,
+  MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
 import {TasksComponent} from './tasks/ui/tasks.component';
@@ -29,7 +31,7 @@ import {ShortTextPipe} from './tasks/pipes/short-text.pipe';
 import {TimestampPipe} from './tasks/pipes/timestamp.pipe';
 import {AddItemDialogComponent} from './tasks/components/add-item-dialog/add-item-dialog.component';
 import {FormsModule} from '@angular/forms';
-import { TaskPriorityIconPipe } from './tasks/pipes/task-priority-icon.pipe';
+import {TaskPriorityIconPipe} from './tasks/pipes/task-priority-icon.pipe';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { TaskPriorityIconPipe } from './tasks/pipes/task-priority-icon.pipe';
     BrowserAnimationsModule,
     HttpClientModule,
     FlexLayoutModule,
+    FormsModule,
 
     // Material
     MatSidenavModule,
@@ -64,8 +67,8 @@ import { TaskPriorityIconPipe } from './tasks/pipes/task-priority-icon.pipe';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    FormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],
