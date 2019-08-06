@@ -7,6 +7,7 @@ import {take} from 'rxjs/operators';
 import {AddRemoveItem} from '../../core/AddRemoveItem';
 import {ItemBase} from '../../core/base/ItemBase';
 import {ItemType} from '../../core/base/ItemType';
+import {environment} from '../../../../environments/environment.prod';
 
 @Component({
   selector: 'app-task-categories',
@@ -31,7 +32,7 @@ export class TaskCategoriesComponent extends ItemBase<Project> implements AddRem
   }
 
   onAddItem(): void {
-    this.dialogResponse('Add Project', ItemType.Project)
+    this.dialogResponse(environment.addProjectTitle, ItemType.AddProject)
       .pipe(take(1))
       .subscribe(
         response => {
@@ -43,6 +44,14 @@ export class TaskCategoriesComponent extends ItemBase<Project> implements AddRem
   }
 
   onRemoveItem(itemId: string): void {
-    this.taskService.removeItem(itemId);
+    this.dialogResponse(environment.removeProjectTitle, ItemType.RemoveProject)
+      .pipe(take(1))
+      .subscribe(
+        response => {
+          if (response.dialog.isDialogSubmitted) {
+            this.taskService.removeItem(itemId);
+          }
+        }
+      );
   }
 }

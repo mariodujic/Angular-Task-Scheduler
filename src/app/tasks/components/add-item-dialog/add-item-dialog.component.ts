@@ -28,9 +28,9 @@ export class AddItemDialogComponent {
   }
 
   private setItemModel(data) {
-    if (data.type === ItemType.Project) {
+    if (data.type === ItemType.AddProject) {
       this.itemModel = new Project();
-    } else if (data.type === ItemType.Task) {
+    } else if (data.type === ItemType.AddTask) {
       this.itemModel = new Task(new Date());
     }
   }

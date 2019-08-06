@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {TaskService} from '../../services/task.service';
-import {take} from 'rxjs/operators';
 import {Task} from '../../data/task.model';
 import {AddRemoveItem} from '../../core/AddRemoveItem';
 import {UserInterfaceService} from '../../services/user-interface.service';
@@ -39,7 +38,7 @@ export class TaskContentComponent extends ItemBase<Task> implements AddRemoveIte
 
   // first observable holds task and dialog data, second dialog holds project data
   onAddItem(): void {
-    combineLatest(this.dialogResponse('Add Project', ItemType.Task), this.taskService.getCurrentProjectSubject())
+    combineLatest(this.dialogResponse(environment.addTaskTitle, ItemType.AddTask), this.taskService.getCurrentProjectSubject())
       .subscribe(value => {
         if (value[0].dialog.isDialogSubmitted) {
           this.taskService.addItem(value[1], value[0].item);
@@ -49,13 +48,21 @@ export class TaskContentComponent extends ItemBase<Task> implements AddRemoveIte
   }
 
   onRemoveItem(itemId: string): void {
-    this.taskService.getCurrentProjectSubject()
-      .pipe(take(1))
-      .subscribe(
-        project => {
-          this.taskService.removeItem(project.id, itemId);
-          this.uiService.showSnackbar(SnackbarType.SUCCESS, environment.taskSuccessfullyRemoved, SnackbarTime.LONG);
+    /*  this.taskService.getCurrentProjectSubject()
+        .pipe(take(1))
+        .subscribe(
+          project => {
+            this.taskService.removeItem(project.id, itemId);
+            this.uiService.showSnackbar(SnackbarType.SUCCESS, environment.taskSuccessfullyRemoved, SnackbarTime.LONG);
+          }
+        );*/
+
+    combineLatest(this.dialogResponse(environment.removeTaskTitle, ItemType.RemoveTask), this.taskService.getCurrentProjectSubject())
+      .subscribe(value => {
+        if (value[0].dialog.isDialogSubmitted) {
+          this.taskService.removeItem(value[1].id, itemId);
+          this.uiService.showSnackbar(SnackbarType.SUCCESS, environment.taskRemovedSuccessfully, SnackbarTime.LONG);
         }
-      );
+      });
   }
 }
