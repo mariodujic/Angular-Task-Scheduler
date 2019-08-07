@@ -35,34 +35,25 @@ export class AddItemDialogComponent {
     }
   }
 
-  public onDismiss(isSubmitted: boolean): void {
-    if (isSubmitted && (this.data.type === ItemType.AddProject || this.data.type === ItemType.AddTask)) {
-      this.acceptAddingItemsSubmission();
-    } else if (isSubmitted && (this.data.type === ItemType.RemoveProject || this.data.type === ItemType.RemoveTask)) {
-      this.acceptAddingItemsSubmission();
-    } else if (!isSubmitted) {
-      this.closeDialog();
-    } else {
+  public onAccept() {
+    if (this.itemModel !== undefined && this.itemModel.title === '') {
       this.rejectDialogSubmission();
+      return;
     }
+
+    this.closeDialog(true);
+  }
+
+  public onDismiss(): void {
+    this.closeDialog(false);
   }
 
   private rejectDialogSubmission(): void {
     this.uiService.showSnackbar(SnackbarType.WARNING, environment.noDialogInput, SnackbarTime.LONG);
   }
 
-  private acceptAddingItemsSubmission(): void {
-    this.dialogModel.isDialogSubmitted = true;
-    this.dialogRef.close(
-      {
-        dialog: this.dialogModel,
-        item: this.itemModel
-      }
-    );
-  }
-
-  private closeDialog() {
-    this.dialogModel.isDialogSubmitted = false;
+  private closeDialog(isSubmitted: boolean): void {
+    this.dialogModel.isDialogSubmitted = isSubmitted;
     this.dialogRef.close(
       {
         dialog: this.dialogModel,
