@@ -1,5 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="space-around center">
   <p mat-dialog-title>{{dialogModel.dialogTitle}}</p>
+
   <mat-form-field
     class="full-width"
     *ngIf="data.type === 'add_project' || data.type === 'add_task'">
@@ -8,6 +9,16 @@
       placeholder="Item title?"
       [(ngModel)]="itemModel.title">
   </mat-form-field>
+
+  <mat-form-field
+    class="full-width"
+    *ngIf="data.type === 'add_task'">
+    <input
+      matInput
+      placeholder="Item task details?"
+      [(ngModel)]="itemModel.description">
+  </mat-form-field>
+
   <div fxLayout="row" fxLayoutAlign="space-between center" class="full-width">
     <button
       mat-raised-button

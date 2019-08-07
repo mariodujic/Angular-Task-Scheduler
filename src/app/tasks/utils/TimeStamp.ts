@@ -13,7 +13,6 @@ export class TimeStamp {
     const minutes = Math.floor(secondsPassed % secondsInDay % secondsInHour / secondsInMinute);
     const seconds = Math.floor(secondsPassed % secondsInDay % secondsInHour % secondsInMinute);
 
-    console.log(secondsPassed);
     return `${days > 0 ? days + 'd' : ''} ` +
       `${hours > 0 ? hours + 'h' : ''} ` +
       `${minutes > 0 ? minutes + 'm' : ''} ` +

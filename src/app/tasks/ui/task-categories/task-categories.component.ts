@@ -31,7 +31,6 @@ export class TaskCategoriesComponent extends ItemBase<Project> implements AddRem
   }
 
   onProjectSelect(project: Project) {
-    console.log(project);
     this.taskService.getCurrentProjectSubject().next(project);
   }
 

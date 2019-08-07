@@ -36,7 +36,6 @@ export class TaskService implements ServiceBlueprint {
 
   public removeItem(projectId: string, taskId?: string): void {
     if (taskId) {
-      console.log('Removing task');
       this.project.find(value => value.id === projectId).tasks.splice(this.getItemIndex(taskId), 1);
     } else {
       this.project.splice(this.getItemIndex(projectId), 1);
