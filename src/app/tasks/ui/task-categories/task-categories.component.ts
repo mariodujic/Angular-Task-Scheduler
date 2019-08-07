@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {TaskService} from '../../services/task.service';
-import {Project} from '../../data/task.model';
+import {Project, Task} from '../../data/task.model';
 import {slideInOutLeft} from '../../animations/slides';
 import {UserInterfaceService} from '../../services/user-interface.service';
 import {take} from 'rxjs/operators';
@@ -22,6 +22,10 @@ export class TaskCategoriesComponent extends ItemBase<Project> implements AddRem
     public uiService: UserInterfaceService<Project>
   ) {
     super(uiService);
+
+
+    this.taskService.addItem(new Project('asdasd', 'Title', [new Task(new Date(), 'Title', 'Descri', 'asdasd')]));
+
 
     taskService.getCurrentProjectSubject().next(this.taskService.getProjects()[0]);
   }
@@ -49,7 +53,7 @@ export class TaskCategoriesComponent extends ItemBase<Project> implements AddRem
       .subscribe(
         response => {
           if (response.dialog.isDialogSubmitted) {
-            this.taskService.removeItem(itemId);
+            this.taskService.removeItem(itemId, null);
           }
         }
       );

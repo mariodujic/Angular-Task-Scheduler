@@ -9,6 +9,7 @@ import {SnackbarType} from '../../utils/handlers/SnackbarType';
 import {SnackbarTime} from '../../utils/handlers/SnackbarTime';
 import {environment} from '../../../../environments/environment.prod';
 import {ItemBase} from '../../core/base/ItemBase';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-task-content',
@@ -39,6 +40,7 @@ export class TaskContentComponent extends ItemBase<Task> implements AddRemoveIte
   // first observable holds task and dialog data, second dialog holds project data
   onAddItem(): void {
     combineLatest(this.dialogResponse(environment.addTaskTitle, ItemType.AddTask), this.taskService.getCurrentProjectSubject())
+      .pipe(take(1))
       .subscribe(value => {
         if (value[0].dialog.isDialogSubmitted) {
           this.taskService.addItem(value[1], value[0].item);
@@ -48,16 +50,9 @@ export class TaskContentComponent extends ItemBase<Task> implements AddRemoveIte
   }
 
   onRemoveItem(itemId: string): void {
-    /*  this.taskService.getCurrentProjectSubject()
-        .pipe(take(1))
-        .subscribe(
-          project => {
-            this.taskService.removeItem(project.id, itemId);
-            this.uiService.showSnackbar(SnackbarType.SUCCESS, environment.taskSuccessfullyRemoved, SnackbarTime.LONG);
-          }
-        );*/
 
     combineLatest(this.dialogResponse(environment.removeTaskTitle, ItemType.RemoveTask), this.taskService.getCurrentProjectSubject())
+      .pipe(take(1))
       .subscribe(value => {
         if (value[0].dialog.isDialogSubmitted) {
           this.taskService.removeItem(value[1].id, itemId);

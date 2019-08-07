@@ -17,17 +17,17 @@ export class AddItemDialogComponent {
 
   public readonly dialogModel: AddItemDialogModel;
   public itemModel: Project | Task;
-  // instance is passed from parent(where this component is invoked as dialog)
+  // Instance is passed from parent(where this component is invoked as dialog)
   public uiService: UserInterfaceService<Project | Task>;
 
   constructor(
     public dialogRef: MatDialogRef<AddItemDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {
     this.dialogModel = data.dialog;
-    this.setItemModel(data);
+    this.instantiateModel(data);
   }
 
-  private setItemModel(data) {
+  private instantiateModel(data) {
     if (data.type === ItemType.AddProject) {
       this.itemModel = new Project();
     } else if (data.type === ItemType.AddTask) {
@@ -36,11 +36,14 @@ export class AddItemDialogComponent {
   }
 
   public onDismiss(isSubmitted: boolean): void {
-    console.log(this.itemModel.title);
-    if (isSubmitted && this.itemModel.title === '') {
-      this.rejectDialogSubmission();
+    if (isSubmitted && (this.data.type === ItemType.AddProject || this.data.type === ItemType.AddTask)) {
+      this.acceptAddingItemsSubmission();
+    } else if (isSubmitted && (this.data.type === ItemType.RemoveProject || this.data.type === ItemType.RemoveTask)) {
+      this.acceptAddingItemsSubmission();
+    } else if (!isSubmitted) {
+      this.closeDialog();
     } else {
-      this.acceptDialogSubmission();
+      this.rejectDialogSubmission();
     }
   }
 
@@ -48,8 +51,18 @@ export class AddItemDialogComponent {
     this.uiService.showSnackbar(SnackbarType.WARNING, environment.noDialogInput, SnackbarTime.LONG);
   }
 
-  private acceptDialogSubmission(): void {
+  private acceptAddingItemsSubmission(): void {
     this.dialogModel.isDialogSubmitted = true;
+    this.dialogRef.close(
+      {
+        dialog: this.dialogModel,
+        item: this.itemModel
+      }
+    );
+  }
+
+  private closeDialog() {
+    this.dialogModel.isDialogSubmitted = false;
     this.dialogRef.close(
       {
         dialog: this.dialogModel,
