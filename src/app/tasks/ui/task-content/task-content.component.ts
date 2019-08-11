@@ -21,7 +21,7 @@ export class TaskContentComponent extends ItemBase<Task> implements AddRemoveIte
   currentTaskIndex;
 
   constructor(public taskService: TaskService,
-              public uiService: UserInterfaceService<Task>) {
+              public uiService: UserInterfaceService) {
     super(uiService);
   }
 

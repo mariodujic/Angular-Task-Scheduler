@@ -18,7 +18,7 @@ export class AddItemDialogComponent {
   public readonly dialogModel: AddItemDialogModel;
   public itemModel: Project | Task;
   // Instance is passed from parent(where this component is invoked as dialog)
-  public uiService: UserInterfaceService<Project | Task>;
+  public uiService: UserInterfaceService;
 
   constructor(
     public dialogRef: MatDialogRef<AddItemDialogComponent>,

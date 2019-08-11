@@ -6,7 +6,7 @@ import {AddItemDialogModel} from '../components/add-item-dialog/add-item-dialog.
 @Injectable({
   providedIn: 'root'
 })
-export class UserInterfaceService<T> {
+export class UserInterfaceService {
 
   constructor(private dialog: MatDialog,
               private snackbar: MatSnackBar) {

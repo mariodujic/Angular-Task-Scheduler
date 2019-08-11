@@ -4,7 +4,7 @@ import {UserInterfaceService} from '../../services/user-interface.service';
 
 export class ItemBase<T> {
 
-  constructor(public uiService: UserInterfaceService<T>) {
+  constructor(public uiService: UserInterfaceService) {
   }
   // Item type can be project || task
   public dialogResponse(dialogTitle: string, itemType: string): Observable<any> {

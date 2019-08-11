@@ -19,7 +19,7 @@ export class TaskCategoriesComponent extends ItemBase<Project> implements AddRem
 
   constructor(
     public taskService: TaskService,
-    public uiService: UserInterfaceService<Project>
+    public uiService: UserInterfaceService
   ) {
     super(uiService);
 
